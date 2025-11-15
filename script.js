@@ -102,7 +102,7 @@ function editTask(index){
             editedTask.textContent = editInputEl.value;
             document.querySelector("#editbox-"+index).remove();
             taskEl.appendChild(editedTask);
-            Todos[index] = editedTask.textContent;
+            Todos[index].task = editedTask.textContent;
             localStorage.setItem("My-Todos", JSON.stringify(Todos));
             document.querySelector("#todo-"+index).setAttribute("style", "text-decoration:;");
             document.querySelector("#check-"+index).textContent = "☐"
