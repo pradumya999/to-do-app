@@ -1,10 +1,13 @@
-let Todos = [];
+// let Todos = [];
+let Todos = JSON.parse(localStorage.getItem("My-Todos")) || [];
+RenderTodos();
 
 function AddTodo(){
     const inputEl = document.querySelector("#newTask-Input");
     if(inputEl.value === "") alert("Enter a task!"); 
-    else Todos.push(inputEl.value);
+    else Todos.push({task: inputEl.value, status: false});
     inputEl.value = "";
+    localStorage.setItem("My-Todos", JSON.stringify(Todos));
     RenderTodos();
 }
 
@@ -27,7 +30,7 @@ function CreateElement(index){
     taskDiv.setAttribute("id", "todo-"+index);
     const task = document.createElement("h4");
     task.setAttribute("style", "margin: 0px;")
-    task.textContent = Todos[index];
+    task.textContent = Todos[index].task;
     taskDiv.appendChild(task);
 
     //Options for task
@@ -39,7 +42,8 @@ function CreateElement(index){
     checkSpan.setAttribute("style", "padding-right: 10px")
     const checkButton = document.createElement("h4");
     checkButton.setAttribute("id", "check-"+index);
-    checkButton.textContent = "☐";
+    if(!Todos[index].status) checkButton.textContent = "☐";
+    else checkButton.textContent = "☑";
     checkButton.setAttribute("style", "margin: 0px; cursor: pointer; padding-bottom: 3px;");
     checkButton.addEventListener('click', () => CompleteTask(index));
     checkSpan.appendChild(checkButton);
@@ -74,11 +78,14 @@ function CreateElement(index){
 function CompleteTask(index){
     const state = document.querySelector("#check-"+index).textContent;
     if(state === "☐"){
+    // if(Todos[index].status == false){
         document.querySelector("#todo-"+index).setAttribute("style", "text-decoration: line-through;");
         document.querySelector("#check-"+index).textContent = "☑";
+        Todos[index].status = true;
     } else {
         document.querySelector("#todo-"+index).setAttribute("style", "text-decoration:;");
         document.querySelector("#check-"+index).textContent = "☐";
+        Todos[index].status = false;
     }
 }
 
@@ -96,6 +103,7 @@ function editTask(index){
             document.querySelector("#editbox-"+index).remove();
             taskEl.appendChild(editedTask);
             Todos[index] = editedTask.textContent;
+            localStorage.setItem("My-Todos", JSON.stringify(Todos));
             document.querySelector("#todo-"+index).setAttribute("style", "text-decoration:;");
             document.querySelector("#check-"+index).textContent = "☐"
         }
@@ -123,6 +131,7 @@ function editTask(index){
 
 function deleteTask(index){
     Todos.splice(index, 1);
+    localStorage.setItem("My-Todos", JSON.stringify(Todos));
     RenderTodos();
 }
 
