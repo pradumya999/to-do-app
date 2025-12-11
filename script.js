@@ -92,7 +92,7 @@ function CompleteTask(index){
     const state = document.querySelector("#check-"+index).textContent;
     if(state === "☐"){
         document.querySelector("#todo-"+index).setAttribute("style", "text-decoration: line-through;");
-        document.querySelector("#topDiv-"+index).style.backgroundColor = "#d6f4ed";
+        document.querySelector("#topDiv-"+index).style.backgroundColor = "rgb(12, 150, 248, 0.5)";
         document.querySelector("#check-"+index).textContent = "☑";
         Todos[index].status = true;
         localStorage.setItem("My-Todos", JSON.stringify(Todos));
