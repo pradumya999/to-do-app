@@ -53,7 +53,7 @@ function CreateElement(index){
     if(!Todos[index].status) checkButton.textContent = "☐";
     else{
         taskDiv.setAttribute("style", "text-decoration: line-through;");
-        topDiv.style.backgroundColor = "#d6f4ed";
+        topDiv.style.backgroundColor = "rgb(12, 150, 248, 0.5)";
         checkButton.textContent = "☑";
     }
     
